@@ -1,7 +1,5 @@
 public class TSP {
-    int[][] cost;
-    public TSP(int[][] cost) {
-        this.cost = cost;
+    public TSP() {
     }
 
     //reformulating my backtracking idea
@@ -40,8 +38,9 @@ public class TSP {
         for (int currCity = 1; currCity < numCities; currCity++) {
             if (visited[currCity] == false) {
                 visited[currCity] = true;
-                minimumCostTour = Math.min(minimumCostTour,
-                        cost[lastCity][currCity] + dfs(cost, visited, currCity, numCities, totalCitiesVisited + 1));
+                int exploredPaths = dfs(cost, visited, currCity, numCities, totalCitiesVisited + 1);
+                //passing recursive exploredPaths result into MIN(minimumCostTour, cost + exploredPaths);
+                minimumCostTour = Math.min(minimumCostTour, cost[lastCity][currCity] + exploredPaths);
                 //totalCitiesVisited++ as the update breaks the program...
                 //backtrack
                 visited[currCity] = false;
@@ -74,6 +73,8 @@ public class TSP {
                 {71, 60, 81, 0, 47},
                 {47, 25, 65, 47, 0}
         };// total distance 188
+        //WRONG it should be: (my code gets 245...) 245 seems right!!
+        //        //0>2->1->4->3->0
 
         // 6x6 +more dimensional cases
         // ideal for testing the efficiency of
@@ -100,8 +101,8 @@ public class TSP {
         //path 0 → 2 → 5 → 3 → 1 → 4 → 0
         // 55 (0 to 2) + 33 (2 to 5) + 30 (5 to 3) + 53 (3 to 1) +
         // +29 (1 to 4) + 39 (4 to 0) = 239
-        int minimumTravelCost = tsp(matrix6x6_B);
+        //int minimumTravelCost = tsp(matrix6x6_B);
         //assert minimumTravelCost == 80; //answer for tspDistances is 80
-        System.out.println("min travel cost for tsp problem is : " + minimumTravelCost);
+        //System.out.println("min travel cost for tsp problem is : " + minimumTravelCost);
     }
 }
