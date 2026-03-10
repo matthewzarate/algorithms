@@ -8,10 +8,22 @@ public class TSPbits {
     }
     public int tsp(int[][] cost) {
         int numCities = cost.length;
-        int minimumCost = dfs(cost, 0, numCities);
+        boolean[] visited = new boolean[numCities];
+        visited[0] = true;
+
+        int visitedCityCount = 1;
+        int minimumCost = dfs(cost, 0, visitedCityCount);
         return minimumCost;
     }
-    public int dfs(int[][] cost, int prevCity, int numCities) {
-        return 5;
+    public int dfs(int[][] cost, int lastCity, int numVisitedCities) {
+        if (numVisitedCities == cost.length) {
+            //we've seen every city now, find cost to go from lastCity -> initialCity 0
+            return cost[lastCity][0];
+        }
+        else {
+            int minimumCostTour = Integer.MAX_VALUE;
+
+        }
+
     }
 }
