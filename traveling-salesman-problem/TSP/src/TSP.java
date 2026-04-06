@@ -18,36 +18,36 @@ public class TSP {
 
     static int tsp(int[][] cost) {
         int numCities = cost.length;
-        boolean[] visited = new boolean[numCities];
-        visited[0] = true; //visit the first city, arbitrary
-        int lastCity = 0;
-        //first city doesn't impact final answer because 1->2->3->1 cost == 2->3->1->2 cost.
-        //int minimumCostTour = Integer.MAX_VALUE; WRONG
-        //!!!
-        // I shouldn't keep track of answer as a parameter, it needs to be a pass-by-value object in the current recursion frame
-        // !!!!!
-        int minimumTour = dfs(cost, visited, lastCity, numCities, 1);
 
-        return minimumTour;
-    }
-    static int dfs(int[][] cost, boolean[] visited, int lastCity, int numCities, int totalCitiesVisited) {
-        if (totalCitiesVisited == numCities) {
-            return cost[lastCity][0]; //I got back to the first visited city aka city 0
+        boolean[] visited = new boolean[numCities];
+        for (int i = 0; i < numCities; i++) {
+            visited[i] = false;
         }
-        int minimumCostTour = Integer.MAX_VALUE; //CORRECT
-        for (int currCity = 1; currCity < numCities; currCity++) {
-            if (visited[currCity] == false) {
-                visited[currCity] = true;
-                int exploredPaths = dfs(cost, visited, currCity, numCities, totalCitiesVisited + 1);
-                //passing recursive exploredPaths result into MIN(minimumCostTour, cost + exploredPaths);
-                minimumCostTour = Math.min(minimumCostTour, cost[lastCity][currCity] + exploredPaths);
-                //totalCitiesVisited++ as the update breaks the program...
-                //backtrack
-                visited[currCity] = false;
+        //visit the first city
+        visited[0] = true;
+        return dfs(cost, visited, 0, 1);
+    }
+
+    public static int dfs(int[][] cost, boolean[] visited, int lastCityVisited, int countVisitedCities) {
+        if (countVisitedCities == cost.length) {
+            //you're done, go from lastCity -> original 0th-city
+            return cost[lastCityVisited][0];
+        }
+        int minCost = Integer.MAX_VALUE;
+        for (int i = 1; i < cost.length; i++) {
+            if (visited[i]) {
+                continue;
             }
+
+            //consider city, recurse, backtrack
+            visited[i] = true;
+            minCost = Math.min(minCost, cost[lastCityVisited][i] + dfs(cost, visited, i, countVisitedCities + 1));
+            visited[i] = false;
         }
-        return minimumCostTour;
+        return minCost;
     }
+
+
 
     public static void main(String[] args) {
 

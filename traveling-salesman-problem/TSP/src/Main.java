@@ -59,7 +59,6 @@ public class Main {
         // 55 (0 to 2) + 33 (2 to 5) + 30 (5 to 3) + 53 (3 to 1) +
         // +29 (1 to 4) + 39 (4 to 0) = 239
 
-        TSP tspObj = new TSP();
         int minimumTravelCost = TSP.tsp(matrix4x4);
         System.out.println("min travel cost for tsp problem is : " + minimumTravelCost);
     }
